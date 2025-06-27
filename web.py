@@ -803,7 +803,7 @@ def get_recommendation(knn, df_labeled, user_info, df_original, n_recommendation
     return recommended_df
 
 def main():
-    st.markdown('<h1 class="main-header">🍱 Rekomendasi Makanan untuk Pengidap Diabetes, Hipertensi, dan Cardiovascular Disease</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🍱 Rekomendasi Makanan Berbasis Data USDA</h1>', unsafe_allow_html=True)
     
     # Load data
     with st.spinner('Memuat data makanan...'):
