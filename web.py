@@ -898,7 +898,7 @@ def main():
     
     # Process button
     if st.sidebar.button("🔍 Dapatkan Rekomendasi", type="primary"):
-        with st.spinner('Menyusun hasil rekomendasi'):
+        with st.spinner('Menyusun rekomendasi makanan'):
             # Process user data
             user_info = process_user_data(gender.lower(), age, height, weight, diseases,  preferred_category)
             
