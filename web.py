@@ -64,8 +64,9 @@ def load_data():
         return None
 
 def preprocess_data(df):
-    # 1. Menghapus data makanan yang mengandung kata 'mentah' dan 'tidak siap'
-    df_clean = df[~df['FoodName'].str.contains('mentah|tidak siap', case=False, na=False)]
+    # 1. Memilih makanan relevan
+    df_filtered_foodname = df[~df['FoodName'].str.contains('mentah|tidak siap|alkohol', case=False, na=False)]
+    df_clean = df_filtered_foodname[~df_filtered_foodname['FoodCategory'].str.contains('babi', case=False, na=False)]
 
     # 2. Membuat kolom baru 'FoodGroup' berdasarkan 'FoodCategory'
     food_group_mapping = {
@@ -1125,7 +1126,7 @@ def main():
                             recommendations.append("⚠️ **Nutrisi yang Perlu Ditingkatkan:**")
                             low_nutrients_found = True
                         recommendations.append(f"  - Hasil rekomendasi {nutrient_name}: {percentage:.1f}% dari kebutuhan")
-                        recommendations.append(f"    Ubah porsi makanan Anda dengan menambahkan porsi yang mengandung {nutrient_name.lower()}, sehingga kebutuhan harian minimal {threshold}% dapat terpenuhi.")
+                        recommendations.append(f"    Untuk membantu memenuhi kebutuhan harian minimal akan {nutrient_name.lower()} sebesar {threshold}%, Anda bisa mengubah porsi makanan dengan menambahkan asupan yang kaya {nutrient_name.lower()}. Atau konsumsi suplemen yang dapat menambah asupan {nutrient_name.lower()} namun dengan konsultasi dokter/ahli gizi.")
 
                 if low_nutrients_found:
                     recommendations.append("")
