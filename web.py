@@ -803,7 +803,7 @@ def get_recommendation(knn, df_labeled, user_info, df_original, n_recommendation
     return recommended_df
 
 def main():
-    st.markdown('<h1 class="main-header">🍱 Rekomendasi Makanan untuk Pengidap Diabetes, Hipertensi, dan Cardiovascular Disease</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🍱 Rekomendasi Makanan Berbasis Data USDA</h1>', unsafe_allow_html=True)
     
     # Load data
     with st.spinner('Memuat data makanan...'):
@@ -1196,9 +1196,7 @@ def main():
     
     # Information about the app
     with st.expander("ℹ️ Tentang Website"):
-        st.markdown("""
-        **Website Rekomendasi Makanan untuk Pengidap Diabetes, Hipertensi, dan Cardiovascular Disease (CVD)**
-        
+        st.markdown("""        
         Website ini menggunakan algoritma K-Nearest Neighbors (KNN) dan pendekatan Multiple Constraint 0/1 Knapsack Problem untuk merekomendasikan 
         makanan yang sesuai berdasarkan:
         
@@ -1207,12 +1205,12 @@ def main():
         - **Kebutuhan Nutrisi**: Berdasarkan Angka Kecukupan Gizi (AKG) Indonesia yang disesuaikan dengan kondisi pengguna
         - **Distribusi Waktu Makan**: Sarapan (30%), Makan Siang (40%), Makan Malam (30%)
         
-        **Sumber Data**: USDA FoodCentral Database. Dataset diakses melalui https://www.andrafarm.com/
+        **Sumber Data**: United States Department of Agriculture (USDA) FoodCentral Database. Dataset diakses melalui https://www.andrafarm.com/
         
         Website ini disusun oleh:
         - Bachtiar Rizky Alamsyah
         - Dosen Pembimbing: Retno Aulia Vinarti, S.Kom., M.Kom., Ph.D.
-        - Ahli Gizi: Tia Monica Wulan Sari, Amd. Gz
+        - Ahli Gizi: Tia Monica Wulan Sari, Amd. Gz.
         
         **Catatan**: Rekomendasi ini bersifat umum dan tidak menggantikan konsultasi dengan ahli gizi atau dokter.
         """)
