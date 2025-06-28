@@ -1063,8 +1063,8 @@ def main():
                 # Percentage fulfillment chart
                 colors_ax2 = [get_custom_color(row['Nutrisi'], row['Persentase']) for index, row in comparison_df.iterrows()]
                 ax2.bar(comparison_df['Nutrisi'], comparison_df['Persentase'], color=colors_ax2, alpha=0.7)
-                ax2.axhline(y=120, color='green', linestyle='--', alpha=0.7, label='Target 100%')
-                ax2.axhline(y=100, color='orange', linestyle='--', alpha=0.7, label='Toleransi 120%')
+                ax2.axhline(y=120, color='orange', linestyle='--', alpha=0.7, label='Toleransi 120%')
+                ax2.axhline(y=100, color='green', linestyle='--', alpha=0.7, label='Target 100%')
                 ax2.axhline(y=80, color='red', linestyle='--', alpha=0.7, label='Minimal 80% (Energi, Protein, Serat, Vitamin C, Kalium, Magnesium, Kalsium, Besi)')
                 ax2.axhline(y=60, color='red', linestyle='--', alpha=0.7, label='Minimal 60% (Gula Total dan Natrium)')
                 ax2.axhline(y=40, color='red', linestyle='--', alpha=0.7, label='Minimal 40% (Lemak Jenuh dan Kolesterol)')
