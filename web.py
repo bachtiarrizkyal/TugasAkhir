@@ -1043,40 +1043,111 @@ def main():
                             return 'orange'
                 
                 st.markdown('<h2 class="sub-header">📈 Visualisasi Pemenuhan Nutrisi</h2>', unsafe_allow_html=True)
-                
-                fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
-                
-                # Bar chart comparison
+
+                fig1, ax1 = plt.subplots(figsize=(10, 6))
                 x = np.arange(len(comparison_df))
                 width = 0.35
-                
+
                 ax1.bar(x - width/2, comparison_df['Rekomendasi'], width, label='Rekomendasi', color='orange', alpha=0.8)
                 ax1.bar(x + width/2, comparison_df['Kebutuhan'], width, label='Kebutuhan', color='green', alpha=0.8)
                 ax1.set_xlabel('Nutrisi')
                 ax1.set_ylabel('Jumlah')
                 ax1.set_title('Perbandingan Nutrisi: Rekomendasi vs Kebutuhan')
                 ax1.set_xticks(x)
-                ax1.set_xticklabels(comparison_df['Nutrisi'], rotation=45)
+                ax1.set_xticklabels(comparison_df['Nutrisi'], rotation=45, ha='right')
                 ax1.legend()
-                ax1.grid(True, alpha=0.3)
-                
-                # Percentage fulfillment chart
-                colors_ax2 = [get_custom_color(row['Nutrisi'], row['Persentase']) for index, row in comparison_df.iterrows()]
-                ax2.bar(comparison_df['Nutrisi'], comparison_df['Persentase'], color=colors_ax2, alpha=0.7)
-                ax2.axhline(y=120, color='orange', linestyle='--', alpha=0.7, label='Toleransi 120%')
-                ax2.axhline(y=100, color='green', linestyle='--', alpha=0.7, label='Target 100%')
-                ax2.axhline(y=80, color='red', linestyle='--', alpha=0.7, label='Minimal 80% (Energi, Protein, Serat, Vitamin C, Kalium, Magnesium, Kalsium, Besi)')
-                ax2.axhline(y=60, color='red', linestyle='--', alpha=0.7, label='Minimal 60% (Gula Total dan Natrium)')
-                ax2.axhline(y=40, color='red', linestyle='--', alpha=0.7, label='Minimal 40% (Lemak Jenuh dan Kolesterol)')
-                ax2.set_xlabel('Nutrisi')
-                ax2.set_ylabel('Persentase Pemenuhan (%)')
-                ax2.set_title('Persentase Pemenuhan Kebutuhan Nutrisi')
-                ax2.set_xticklabels(comparison_df['Nutrisi'], rotation=45)
-                ax2.legend()
-                ax2.grid(True, alpha=0.3)
-                
+                ax1.grid(axis='y', alpha=0.3)
                 plt.tight_layout()
-                st.pyplot(fig)
+                st.pyplot(fig1)
+
+                st.markdown('---')
+
+                st.markdown('<h3 style="text-align: center;">Persentase Pemenuhan Kebutuhan Nutrisi</h3>', unsafe_allow_html=True)
+
+                fig_combined, (ax_80, ax_60, ax_40) = plt.subplots(1, 3, figsize=(18, 6), sharey=True) 
+
+                # Kelompok Nutrisi: Minimal 80% Pemenuhan
+                nutrients_80_percent = ['Energi', 'Protein', 'Serat', 'VitaminC', 'Kalium', 'Magnesium', 'Kalsium', 'Besi']
+                df_80 = comparison_df[comparison_df['Nutrisi'].isin(nutrients_80_percent)]
+
+                if not df_80.empty:
+                    colors_80 = [get_custom_color(row['Nutrisi'], row['Persentase']) for index, row in df_80.iterrows()]
+                    ax_80.bar(df_80['Nutrisi'], df_80['Persentase'], color=colors_80, alpha=0.7)
+
+                    # Garis referensi untuk kelompok 80%
+                    ax_80.axhline(y=120, color='red', linestyle='--', alpha=0.7, label='Batas Toleransi Maksimal (120%)')
+                    ax_80.axhline(y=100, color='blue', linestyle='-', alpha=0.7, label='Target Optimal (100%)')
+                    ax_80.axhline(y=80, color='green', linestyle='--', alpha=0.7, label='Minimal Target (80%)')
+                    
+                    ax_80.set_xlabel('Nutrisi')
+                    ax_80.set_ylabel('Persentase Pemenuhan (%)')
+                    ax_80.set_title('Minimal 80%')
+                    ax_80.set_ylim(0, 130)
+                    ax_80.set_xticklabels(df_80['Nutrisi'], rotation=45, ha='right')
+                    ax_80.legend(loc='lower right', fontsize='small')
+                    ax_80.grid(axis='y', alpha=0.3)
+                else:
+                    ax_80.text(0.5, 0.5, "Tidak ada data", horizontalalignment='center', verticalalignment='center', transform=ax_80.transAxes)
+                    ax_80.set_title('Minimal 80%')
+                    ax_80.set_xticks([])
+                    ax_80.set_yticks([])
+
+
+                # Kelompok Nutrisi: Minimal 60% Pemenuhan
+                nutrients_60_percent = ['GulaTotal', 'Natrium']
+                df_60 = comparison_df[comparison_df['Nutrisi'].isin(nutrients_60_percent)]
+
+                if not df_60.empty:
+                    colors_60 = [get_custom_color(row['Nutrisi'], row['Persentase']) for index, row in df_60.iterrows()]
+                    ax_60.bar(df_60['Nutrisi'], df_60['Persentase'], color=colors_60, alpha=0.7)
+
+                    # Garis referensi untuk kelompok 60%
+                    ax_60.axhline(y=120, color='red', linestyle='--', alpha=0.7, label='Batas Toleransi Maksimal (120%)')
+                    ax_60.axhline(y=100, color='blue', linestyle='-', alpha=0.7, label='Target Optimal (100%)')
+                    ax_60.axhline(y=60, color='green', linestyle='--', alpha=0.7, label='Minimal Target (60%)')
+                    
+                    ax_60.set_xlabel('Nutrisi')
+                    # ax_60.set_ylabel('Persentase Pemenuhan (%)') # Tidak perlu label Y jika sharey=True
+                    ax_60.set_title('Minimal 60%')
+                    ax_60.set_ylim(0, 130)
+                    ax_60.set_xticklabels(df_60['Nutrisi'], rotation=45, ha='right')
+                    ax_60.legend(loc='lower right', fontsize='small')
+                    ax_60.grid(axis='y', alpha=0.3)
+                else:
+                    ax_60.text(0.5, 0.5, "Tidak ada data", horizontalalignment='center', verticalalignment='center', transform=ax_60.transAxes)
+                    ax_60.set_title('Minimal 60%')
+                    ax_60.set_xticks([])
+                    ax_60.set_yticks([])
+
+
+                # Kelompok Nutrisi: Minimal 40% Pemenuhan
+                nutrients_40_percent = ['LemakJenuh', 'Kolesterol']
+                df_40 = comparison_df[comparison_df['Nutrisi'].isin(nutrients_40_percent)]
+
+                if not df_40.empty:
+                    colors_40 = [get_custom_color(row['Nutrisi'], row['Persentase']) for index, row in df_40.iterrows()]
+                    ax_40.bar(df_40['Nutrisi'], df_40['Persentase'], color=colors_40, alpha=0.7)
+
+                    # Garis referensi untuk kelompok 40%
+                    ax_40.axhline(y=120, color='red', linestyle='--', alpha=0.7, label='Batas Toleransi Maksimal (120%)')
+                    ax_40.axhline(y=100, color='blue', linestyle='-', alpha=0.7, label='Target Optimal (100%)')
+                    ax_40.axhline(y=40, color='green', linestyle='--', alpha=0.7, label='Minimal Target (40%)')
+                    
+                    ax_40.set_xlabel('Nutrisi')
+                    # ax_40.set_ylabel('Persentase Pemenuhan (%)') # Tidak perlu label Y jika sharey=True
+                    ax_40.set_title('Minimal 40%')
+                    ax_40.set_ylim(0, 130)
+                    ax_40.set_xticklabels(df_40['Nutrisi'], rotation=45, ha='right')
+                    ax_40.legend(loc='lower right', fontsize='small')
+                    ax_40.grid(axis='y', alpha=0.3)
+                else:
+                    ax_40.text(0.5, 0.5, "Tidak ada data", horizontalalignment='center', verticalalignment='center', transform=ax_40.transAxes)
+                    ax_40.set_title('Minimal 40%')
+                    ax_40.set_xticks([])
+                    ax_40.set_yticks([])
+
+                plt.tight_layout() # Mengatur tata letak agar tidak tumpang tindih
+                st.pyplot(fig_combined) # Menampilkan figure gabungan
                 
                 # Summary table
                 st.markdown('<h2 class="sub-header">📋 Ringkasan Nutrisi</h2>', unsafe_allow_html=True)
