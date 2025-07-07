@@ -1024,23 +1024,23 @@ def main():
                         if percentage < 80:
                             return 'red'
                         elif 80 <= percentage <= 100:
-                            return 'green'
-                        elif percentage > 100:
                             return 'orange'
+                        elif percentage > 100:
+                            return 'green'
                     elif nutrient in ['GulaTotal', 'Natrium']:
                         if percentage < 60:
                             return 'red'
                         elif 60 <= percentage <= 100:
-                            return 'green'
-                        elif percentage > 100:
                             return 'orange'
+                        elif percentage > 100:
+                            return 'green'
                     elif nutrient in ['LemakJenuh', 'Kolesterol']:
                         if percentage < 40:
                             return 'red'
                         elif 40 <= percentage <= 100:
-                            return 'green'
-                        elif percentage > 100:
                             return 'orange'
+                        elif percentage > 100:
+                            return 'green'
                 
                 st.markdown('<h2 class="sub-header">📈 Visualisasi Pemenuhan Nutrisi</h2>', unsafe_allow_html=True)
 
