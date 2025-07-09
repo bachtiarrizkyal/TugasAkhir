@@ -1146,8 +1146,16 @@ def main():
                     ax_40.set_xticks([])
                     ax_40.set_yticks([])
 
-                plt.tight_layout() # Mengatur tata letak agar tidak tumpang tindih
-                st.pyplot(fig_combined) # Menampilkan figure gabungan
+                plt.tight_layout()
+                st.pyplot(fig_combined)
+
+                st.markdown("""
+                ##### Keterangan Warna Barplot
+
+                * **Merah**: Persentase pemenuhan nutrisi masih di bawah target minimal. Perlu perhatian lebih untuk memenuhi kebutuhan nutrisi ini.
+                * **Oranye**: Persentase pemenuhan nutrisi sudah di atas target minimal, namun masih di bawah target optimal (100%). Cukup baik, tetapi ada ruang untuk peningkatan.
+                * **Hijau**: Persentase pemenuhan nutrisi sudah mencapai atau melebihi target optimal (100%). Menunjukkan pemenuhan nutrisi yang baik.
+                """)
                 
                 # Summary table
                 st.markdown('<h2 class="sub-header">📋 Ringkasan Nutrisi</h2>', unsafe_allow_html=True)
@@ -1278,7 +1286,7 @@ def main():
         - **Kebutuhan Nutrisi**: Berdasarkan Angka Kecukupan Gizi (AKG) Indonesia yang disesuaikan dengan kondisi pengguna
         - **Distribusi Waktu Makan**: Sarapan (30%), Makan Siang (40%), Makan Malam (30%)
         
-        **Sumber Data**: United States Department of Agriculture (USDA) FoodCentral Database. Dataset diakses melalui https://www.andrafarm.com/
+        **Sumber Data**: United States Department of Agriculture (USDA) FoodCentral Database. Dataset diakses melalui https://www.andrafarm.com/. Data USDA dipilih karena merupakan basis data nutrisi terbesar dan terlengkap di dunia, menyediakan detail nutrisi yang lengkap, dan sering digunakan dalam penelitian serta pedoman diet untuk penyakit kronis seperti diabetes, hipertensi, dan CVD.
         
         Website ini disusun oleh:
         - Bachtiar Rizky Alamsyah
